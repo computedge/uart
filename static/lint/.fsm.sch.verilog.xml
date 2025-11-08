@@ -1,0 +1,14 @@
+<Command name="schRTLInfo"  delimiter="."  >
+<RTLBlock >
+<RTLInfo   name="current_state_0"  type="2"  fileName="/home/praba/Projects/UART/src/rtl/tx.sv"  >
+    <Seg beginLine="49"  endLine="126"  />
+  </RTLInfo>
+ <Instance name="UART.u_transmitter"  />
+</RTLBlock>
+<RTLBlock >
+<RTLInfo   name="current_state_1"  type="2"  fileName="/home/praba/Projects/UART/src/rtl/rx.sv"  >
+    <Seg beginLine="69"  endLine="117"  />
+  </RTLInfo>
+ <Instance name="UART.U_receiver"  />
+</RTLBlock>
+ </Command>
