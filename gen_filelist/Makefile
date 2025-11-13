@@ -13,5 +13,5 @@ clean_filelist:
 
 gen_filelist:
 	mkdir -p ${WORKAREA}/output/${DUT}/${FLOW}/
-	cp -rfv ${WORKAREA}/filelist/*.f ${WORKAREA}/output/${DUT}/${FLOW}/
+	cp -rfv ${WORKAREA}/filelist/${DUT}.s*.f ${WORKAREA}/output/${DUT}/${FLOW}/
 	ln -s ${WORKAREA}/output/${DUT}/${FLOW}/ ./output

@@ -1,0 +1,17 @@
+[tasks]
+prove_fifo
+
+[options]
+prove_fifo: mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -formal sync_fifo.sv
+hierarchy -check -top sync_fifo 
+prep -top sync_fifo
+
+
+[files]
+sync_fifo.sv 

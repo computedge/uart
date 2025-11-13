@@ -1,4 +1,4 @@
-module UART (
+module uart_top (
 	// Input signals - Global signals
 	input logic 		PCLK,				// System clock
 	input logic 		PRESETn,			// System reset

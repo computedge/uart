@@ -13,11 +13,19 @@ all:
 clean:
 	rm -rf *.f
 
-create_sim_filelist:
-	touch ${DUT}.sim.f
-	realpath ${WORKAREA}/src/rtl/*sv >> ${DUT}.sim.f
+rtl_filelist:
+	rm -rf ${DUT}.rtl.f
+	touch ${DUT}.rtl.f
+	realpath ${WORKAREA}/src/rtl/*.sv >> ${DUT}.rtl.f
 
-create_synth_filelist:
+create_sim_filelist: rtl_filelist
+	touch ${DUT}.sim.f
+##	realpath ${WORKAREA}/filelist/${DUT}.rtl.f >> ${DUT}.sim.f
+##	realpath ${WORKAREA}/verif/env/verif_env.f >> ${DUT}.sim.f
+	@echo "-f $(shell realpath ${WORKAREA}/filelist/${DUT}.rtl.f)" >> ${DUT}.sim.f
+	@echo "-f $(shell realpath ${WORKAREA}/verif/env/verif_env.f)" >> ${DUT}.sim.f
+
+create_synth_filelist: rtl_filelist
 	touch ${DUT}.synth.f
-	realpath ${WORKAREA}/src/rtl/*sv >> ${DUT}.synth.f
+	@echo "-f $(shell realpath ${WORKAREA}/filelist/${DUT}.rtl.f)" >> ${DUT}.synth.f
 
