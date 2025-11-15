@@ -1,7 +1,7 @@
 class driver;
-	virtual uart_intf.uart_driver vif;
+	virtual uart_intf vif;
 
-	function new(virtual uart_intf.uart_driver vif);
+	function new(virtual uart_intf vif);
 		this.vif =  vif;
 	endfunction
 
@@ -15,21 +15,32 @@ class driver;
 		vif.PWDATA 	<= 0;
 	endtask
 
-	task drive (apb_transaction tr);
-		@(posedge vif.PCLK)
-		vif.PSEL	<= 1;
-		vif.PADDR	<= tr.paddr;
-		vif.PWRITE	<= tr.write;
-		vif.PWDATA	<= tr.pdata;
-		vif.PENABLE	<= 0;
 
-		@(posedge vif.PCLK);
-		vif.PENABLE	<= 1;
-		wait (vif.PREADY);
+  	// Task write
+  	task write(input logic [7:0] reg_addr, logic [7:0] wdata);
+		@(vif.cb_drv);
+		vif.cb_drv.PSEL 	<= 1;
+		vif.cb_drv.PWRITE 	<= 1;
+		vif.cb_drv.PADDR	<= reg_addr;
+		vif.cb_drv.PWDATA	<= wdata;
+		vif.cb_drv.PENABLE	<= 1;
+		@(vif.cb_drv);
+		vif.cb_drv.PSEL 	<= 0;
+		vif.cb_drv.PENABLE	<= 0;
+  	endtask
 
-		@(posedge vif.PCLK);
-		vif.PSEL	<= 0;
-		vif.PENABLE	<= 0;
-		tr.display("DRIVER");
+	// Task for reg read
+	//task read(input logic [7:0] addr, output logic [7:0] rdata);
+	task read(input logic [7:0] addr);
+		@(vif.cb_drv);
+		vif.cb_drv.PSEL 	<= 1;
+		vif.cb_drv.PWRITE 	<= 0;
+		vif.cb_drv.PADDR	<= addr;
+		vif.cb_drv.PENABLE	<= 1;
+		@(vif.cb_drv);
+	//	rdata 			<= vif.PRDATA;
+		vif.cb_drv.PSEL 	<= 0;
+		vif.cb_drv.PENABLE	<= 0;
 	endtask
+
 endclass

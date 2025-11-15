@@ -14,6 +14,5 @@ class generator;
     end
   endtask
 
-  // Task write
-  //task write_uart_reg (logic [)
+
 endclass

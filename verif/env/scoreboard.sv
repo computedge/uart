@@ -1,18 +1,23 @@
-class scoreboard;
-	mailbox #(apb_transaction) mon2sb;
+// apb_scoreboard.sv
+class apb_scoreboard;
 
-  function new(mailbox #(apb_transaction) mon2sb);
-    this.mon2sb = mon2sb;
+  typedef struct {
+    logic [7:0] addr;
+    logic [31:0] data;
+  } apb_txn_t;
+
+  mailbox #(apb_txn_t) mon2scb;
+
+  function new(mailbox #(apb_txn_t) mon2scb);
+    this.mon2scb = mon2scb;
   endfunction
 
   task run();
-    apb_transaction tr;
+    apb_txn_t txn;
     forever begin
-      mon2sb.get(tr);
-      // Simple check: just print or compare against expected behavior
-      $display("[SCOREBOARD] ADDR=0x%0h DATA=0x%0h WRITE=%0b",
-                tr.paddr, tr.pdata, tr.write);
+      mon2scb.get(txn);
+      $display("[%0t] SCOREBOARD: Addr=0x%0h Data=0x%0h", $time, txn.addr, txn.data);
     end
   endtask
-
 endclass
+

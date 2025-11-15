@@ -39,5 +39,35 @@ interface uart_intf (input logic PCLK , input logic PRESETn);
 	endclocking
 
 
+	// Modport declaration
+	
+	modport uart_driver (
+		input PCLK,
+		input PRESETn,
+		// Driver interface for DUT input
+		output PSEL,
+	        output PENABLE,
+	       	output PWRITE,
+		output PADDR, 
+		output PWDATA,
+		output UART_SIN,
+
+		input PRDATA,
+		input PREADY
+		);
+
+	modport uart_monitor (
+		input PCLK,
+		input PRESETn,
+		input PSEL, PENABLE, PWRITE, 
+		input PADDR, 
+		input PWDATA,
+		input PRDATA,
+		input PREADY, PSLVERR,
+		input UART_SIN,
+		input UART_SOUT
+	);
+
+
 endinterface
 

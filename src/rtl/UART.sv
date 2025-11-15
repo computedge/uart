@@ -69,7 +69,7 @@ reg_file u_reg_file 	(
 			.PWRITE 			(PWRITE				),
 			.PADDR				(PADDR				),
 			.PWDATA 			(PWDATA				),
-			.PRDATA				(				),
+			.PRDATA				(PRDATA				),
 			.i_rx_data_ready		(r_rx_data_ready		),
 			.i_rx_ovr_run_err		(r_rx_ovr_run_err		),
 			.i_rx_parity_err		(r_rx_parity_err		),
@@ -121,7 +121,7 @@ uart_rx  U_receiver (
 			.odd_even_parity		(1'b0				),
 			.sin				(UART_SIN			),
 			.frame_error			(r_frame_error			),
-			.rx_data			(PRDATA				),
+			.rx_data			(				),
 			.rx_valid			(r_rx_valid			)
 		);
 

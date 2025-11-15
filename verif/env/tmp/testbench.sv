@@ -1,7 +1,6 @@
 module uart_tb_top;
 
 	logic pclk, presetn;
-	logic [7:0] r_rdata;
 
 	uart_intf intf (pclk, presetn);
 
@@ -25,11 +24,7 @@ module uart_tb_top;
 
 
 	// Initialize uart_env
-// 	env uart_env;
-
-	// Initialize driver and monitor
-	driver drv;
-	monitor mon;
+	env uart_env;
 
 
 	// Generate clock
@@ -48,20 +43,8 @@ module uart_tb_top;
 
 	// Environemnt setup and start
 	initial begin
-		drv = new(intf);
-		mon = new(intf);
-		fork
-			mon.run();
-		join_none
-		
-		#30;
-		drv.write(8'h3,8'hFE);
-		drv.write(8'h4,8'h02);
-		drv.write(8'h2,8'h05);
-
-		#10 ;
-		drv.read(8'h3);
-		$display("Readback Register Addr : %0h and Data : %0h",8'h3,r_rdata);
+		uart_env = new(intf);
+		uart_env.run();
 	end
 
 	// Dump the fsdb file
